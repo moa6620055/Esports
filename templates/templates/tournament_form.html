@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}| {{ action }} Tournament{% endblock %}
+{% block content %}
+
+<h1>{% if action == 'Add' %}➕ Add Tournament{% else %}✏️ Edit Tournament{% endif %}</h1>
+
+<div class="card">
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Tournament ID *</label>
+                <input type="number" name="tournament_id"
+                       value="{{ tournament[0] if tournament else '' }}"
+                       {% if action == 'Edit' %}readonly{% endif %}
+                       required>
+            </div>
+            <div class="form-group">
+                <label>Max Participants</label>
+                <input type="number" name="max_part" min="1"
+                       value="{{ tournament[2] if tournament else '' }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Tournament Name *</label>
+            <input type="text" name="t_name" maxlength="100"
+                   value="{{ tournament[1] if tournament else '' }}" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Game Title</label>
+                <input type="text" name="game_title" maxlength="100"
+                       value="{{ tournament[6] if tournament else '' }}">
+            </div>
+            <div class="form-group">
+                <label>Prize Pool ($)</label>
+                <input type="number" name="prize_pool" min="0" step="0.01"
+                       value="{{ tournament[7] if tournament else '' }}">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" name="start_date"
+                       value="{{ tournament[4] if tournament and tournament[4] else '' }}">
+            </div>
+            <div class="form-group">
+                <label>End Date</label>
+                <input type="date" name="end_date"
+                       value="{{ tournament[5] if tournament and tournament[5] else '' }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+                <option value="Open"     {% if tournament and tournament[3] == 'Open' %}selected{% endif %}>Open</option>
+                <option value="Closed"   {% if tournament and tournament[3] == 'Closed' %}selected{% endif %}>Closed</option>
+                <option value="Ongoing"  {% if tournament and tournament[3] == 'Ongoing' %}selected{% endif %}>Ongoing</option>
+                <option value="Finished" {% if tournament and tournament[3] == 'Finished' %}selected{% endif %}>Finished</option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{{ action }} Tournament</button>
+            <a href="/tournaments" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

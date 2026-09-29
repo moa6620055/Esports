@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}| {{ action }} Match{% endblock %}
+{% block content %}
+
+<h1>{% if action == 'Add' %}➕ Add Match{% else %}✏️ Edit Match{% endif %}</h1>
+
+<div class="card">
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Match ID *</label>
+                <input type="number" name="match_id"
+                       value="{{ match[0] if match else '' }}"
+                       {% if action == 'Edit' %}readonly{% endif %}
+                       required>
+            </div>
+            <div class="form-group">
+                <label>Stage</label>
+                <select name="stage_id">
+                    <option value="">-- Select Stage --</option>
+                    {% for s in stages %}
+                    <option value="{{ s[0] }}"
+                        {% if match and match[1] == s[0] %}selected{% endif %}>
+                        {{ s[1] }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Team 1 *</label>
+                <select name="team_1_id" required>
+                    <option value="">-- Select Team --</option>
+                    {% for t in teams %}
+                    <option value="{{ t[0] }}"
+                        {% if match and match[2] == t[0] %}selected{% endif %}>
+                        {{ t[1] }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Team 2 *</label>
+                <select name="team_2_id" required>
+                    <option value="">-- Select Team --</option>
+                    {% for t in teams %}
+                    <option value="{{ t[0] }}"
+                        {% if match and match[3] == t[0] %}selected{% endif %}>
+                        {{ t[1] }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Winner</label>
+                <select name="winner_id">
+                    <option value="">-- No winner yet --</option>
+                    {% for t in teams %}
+                    <option value="{{ t[0] }}"
+                        {% if match and match[4] == t[0] %}selected{% endif %}>
+                        {{ t[1] }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status">
+                    <option value="Scheduled" {% if match and match[6] == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                    <option value="Ongoing"   {% if match and match[6] == 'Ongoing' %}selected{% endif %}>Ongoing</option>
+                    <option value="Finished"  {% if match and match[6] == 'Finished' %}selected{% endif %}>Finished</option>
+                    <option value="Completed" {% if match and match[6] == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Scheduled Date & Time</label>
+            <input type="datetime-local" name="scheduled_at"
+                   value="{{ match[5] if match and match[5] else '' }}">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{{ action }} Match</button>
+            <a href="/matches" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

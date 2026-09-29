@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}| Matches{% endblock %}
+{% block content %}
+
+<div class="top-bar">
+    <h1>⚔️ Matches</h1>
+    <a href="/matches/add" class="btn btn-primary">+ Add Match</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Stage</th>
+            <th>Team 1</th>
+            <th>Team 2</th>
+            <th>Winner</th>
+            <th>Scheduled</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in matches %}
+        <tr>
+            <td>{{ m[0] }}</td>
+            <td>{{ m[6] or '—' }}</td>
+            <td>{{ m[1] }}</td>
+            <td>{{ m[2] }}</td>
+            <td>
+                {% if m[3] %}
+                    <span class="badge badge-green">🏆 {{ m[3] }}</span>
+                {% else %}
+                    <span style="color:#6b7280;">TBD</span>
+                {% endif %}
+            </td>
+            <td>{{ m[4] or '—' }}</td>
+            <td>
+                {% if m[5] in ['Finished', 'Completed'] %}
+                    <span class="badge badge-blue">{{ m[5] }}</span>
+                {% elif m[5] == 'Ongoing' %}
+                    <span class="badge badge-green">{{ m[5] }}</span>
+                {% else %}
+                    <span class="badge badge-yellow">{{ m[5] or '—' }}</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="/matches/edit/{{ m[0] }}" class="btn btn-edit">Edit</a>
+                <form method="POST" action="/matches/delete/{{ m[0] }}" style="display:inline;"
+                      onsubmit="return confirm('Delete Match #{{ m[0] }}?')">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" style="text-align:center; color:#6b7280;">No matches found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

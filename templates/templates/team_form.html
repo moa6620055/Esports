@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}| {{ action }} Team{% endblock %}
+{% block content %}
+
+<h1>{% if action == 'Add' %}➕ Add Team{% else %}✏️ Edit Team{% endif %}</h1>
+
+<div class="card">
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Team ID *</label>
+                <input type="number" name="team_id"
+                       value="{{ team[0] if team else '' }}"
+                       {% if action == 'Edit' %}readonly{% endif %}
+                       required>
+            </div>
+            <div class="form-group">
+                <label>Ranking</label>
+                <input type="number" name="ranking" min="0"
+                       value="{{ team[3] if team else '' }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Team Name *</label>
+            <input type="text" name="name" maxlength="100"
+                   value="{{ team[1] if team else '' }}" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Nationality</label>
+                <input type="text" name="nationality" maxlength="50"
+                       value="{{ team[4] if team else '' }}">
+            </div>
+            <div class="form-group">
+                <label>Coach Name</label>
+                <input type="text" name="coach_name" maxlength="100"
+                       value="{{ team[5] if team else '' }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Logo URL</label>
+            <input type="text" name="logo_url" maxlength="255"
+                   value="{{ team[2] if team else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Stadium</label>
+            <input type="text" name="stadium" maxlength="100"
+                   value="{{ team[7] if team else '' }}">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{{ action }} Team</button>
+            <a href="/teams" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

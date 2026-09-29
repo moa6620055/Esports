@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}| Home{% endblock %}
+{% block content %}
+
+<h1>Welcome to eSports Manager</h1>
+
+<div class="security-note">
+    <strong>🔒 SQL Injection Prevention Active:</strong>
+    All database queries use <strong>parameterized statements</strong> (pyodbc <code>?</code> placeholders).
+    Input is also sanitized via type-casting, length limits, date-format validation, and status whitelisting.
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+    <a href="/teams" style="text-decoration:none;">
+        <div style="background:#1a1a2e; border:1px solid #7c3aed; border-radius:10px; padding:1.5rem; text-align:center;">
+            <div style="font-size:2rem;">🏟️</div>
+            <div style="color:#a78bfa; font-weight:700; margin-top:8px;">Teams</div>
+            <div style="color:#6b7280; font-size:0.8rem; margin-top:4px;">Manage all teams</div>
+        </div>
+    </a>
+    <a href="/players" style="text-decoration:none;">
+        <div style="background:#1a1a2e; border:1px solid #7c3aed; border-radius:10px; padding:1.5rem; text-align:center;">
+            <div style="font-size:2rem;">🎮</div>
+            <div style="color:#a78bfa; font-weight:700; margin-top:8px;">Players</div>
+            <div style="color:#6b7280; font-size:0.8rem; margin-top:4px;">Manage all players</div>
+        </div>
+    </a>
+    <a href="/tournaments" style="text-decoration:none;">
+        <div style="background:#1a1a2e; border:1px solid #7c3aed; border-radius:10px; padding:1.5rem; text-align:center;">
+            <div style="font-size:2rem;">🏆</div>
+            <div style="color:#a78bfa; font-weight:700; margin-top:8px;">Tournaments</div>
+            <div style="color:#6b7280; font-size:0.8rem; margin-top:4px;">Manage tournaments</div>
+        </div>
+    </a>
+    <a href="/matches" style="text-decoration:none;">
+        <div style="background:#1a1a2e; border:1px solid #7c3aed; border-radius:10px; padding:1.5rem; text-align:center;">
+            <div style="font-size:2rem;">⚔️</div>
+            <div style="color:#a78bfa; font-weight:700; margin-top:8px;">Matches</div>
+            <div style="color:#6b7280; font-size:0.8rem; margin-top:4px;">View & manage matches</div>
+        </div>
+    </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}| Players{% endblock %}
+{% block content %}
+
+<div class="top-bar">
+    <h1>🎮 Players</h1>
+    <a href="/players/add" class="btn btn-primary">+ Add Player</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Birth Date</th>
+            <th>Global Rank</th>
+            <th>Status</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in players %}
+        <tr>
+            <td>{{ p[0] }}</td>
+            <td><strong>{{ p[1] }} {{ p[2] }}</strong></td>
+            <td>{{ p[3] or '—' }}</td>
+            <td>{{ p[4] or '—' }}</td>
+            <td><span class="badge badge-yellow">#{{ p[5] }}</span></td>
+            <td>
+                {% if p[6] == 'Active' %}
+                    <span class="badge badge-green">Active</span>
+                {% else %}
+                    <span class="badge badge-red">Inactive</span>
+                {% endif %}
+            </td>
+            <td>{{ p[7] or '—' }}</td>
+            <td>
+                <a href="/players/edit/{{ p[0] }}" class="btn btn-edit">Edit</a>
+                <form method="POST" action="/players/delete/{{ p[0] }}" style="display:inline;"
+                      onsubmit="return confirm('Delete {{ p[1] }} {{ p[2] }}?')">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" style="text-align:center; color:#6b7280;">No players found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

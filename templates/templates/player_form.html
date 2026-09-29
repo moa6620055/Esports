@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}| {{ action }} Player{% endblock %}
+{% block content %}
+
+<h1>{% if action == 'Add' %}➕ Add Player{% else %}✏️ Edit Player{% endif %}</h1>
+
+<div class="card">
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Player ID *</label>
+                <input type="number" name="player_id"
+                       value="{{ player[0] if player else '' }}"
+                       {% if action == 'Edit' %}readonly{% endif %}
+                       required>
+            </div>
+            <div class="form-group">
+                <label>Global Rank</label>
+                <input type="number" name="global_rank" min="0"
+                       value="{{ player[6] if player else '' }}">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" name="fname" maxlength="50"
+                       value="{{ player[1] if player else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" name="lname" maxlength="50"
+                       value="{{ player[2] if player else '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Country</label>
+                <input type="text" name="country" maxlength="50"
+                       value="{{ player[3] if player else '' }}">
+            </div>
+            <div class="form-group">
+                <label>Religion</label>
+                <input type="text" name="religion" maxlength="50"
+                       value="{{ player[4] if player else '' }}">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Birth Date</label>
+                <input type="date" name="birth_date"
+                       value="{{ player[5] if player and player[5] else '' }}">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status">
+                    <option value="Active"   {% if player and player[7] == 'Active' %}selected{% endif %}>Active</option>
+                    <option value="Inactive" {% if player and player[7] == 'Inactive' %}selected{% endif %}>Inactive</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" maxlength="100"
+                   value="{{ player[8] if player else '' }}">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{{ action }} Player</button>
+            <a href="/players" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

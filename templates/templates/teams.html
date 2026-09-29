@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}| Teams{% endblock %}
+{% block content %}
+
+<div class="top-bar">
+    <h1>🏟️ Teams</h1>
+    <a href="/teams/add" class="btn btn-primary">+ Add Team</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Ranking</th>
+            <th>Nationality</th>
+            <th>Coach</th>
+            <th>Stadium</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in teams %}
+        <tr>
+            <td>{{ t[0] }}</td>
+            <td><strong>{{ t[1] }}</strong></td>
+            <td><span class="badge badge-yellow">#{{ t[2] }}</span></td>
+            <td>{{ t[3] or '—' }}</td>
+            <td>{{ t[4] or '—' }}</td>
+            <td>{{ t[6] or '—' }}</td>
+            <td>
+                <a href="/teams/edit/{{ t[0] }}" class="btn btn-edit">Edit</a>
+                <form method="POST" action="/teams/delete/{{ t[0] }}" style="display:inline;"
+                      onsubmit="return confirm('Delete {{ t[1] }}?')">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" style="text-align:center; color:#6b7280;">No teams found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
